@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f1e8" />
+    <meta name="description" content="Desafio diário de dedução por letras, sem anúncios." />
+    <title>Entrelinhas — desafio diário</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="client.js" defer></script>
+  </head>
+  <body class="theme-caderno">
+    <a class="skip-link" href="#conteudo">Pular para o jogo</a>
+    <header class="topbar">
+      <a class="brand" href="#inicio" aria-label="Entrelinhas, início">
+        <span class="brand-mark" aria-hidden="true"><span>E</span><span>L</span></span>
+        <span>entrelinhas</span>
+      </a>
+      <div class="topbar-right">
+        <span class="daily-label"><span class="live-dot" aria-hidden="true"></span> DESAFIO DIÁRIO</span>
+        <nav class="view-nav" aria-label="Seções do jogo">
+          <button class="nav-button is-active" type="button" data-view="game" aria-pressed="true">Jogar</button>
+          <button class="nav-button" type="button" data-view="archive" aria-pressed="false">Arquivo</button>
+          <button class="nav-button" type="button" data-view="stats" aria-pressed="false">Estatísticas</button>
+        </nav>
+      </div>
+    </header>
+
+    <main id="conteudo">
+      <section class="intro" id="inicio" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">UM DESAFIO POR DIA</p>
+          <h1 id="page-title">Encontre a palavra.</h1>
+        </div>
+        <p class="intro-copy">Sete tentativas. Uma palavra para descobrir. Sem pressa, sem anúncios.</p>
+      </section>
+
+      <section class="game-layout" data-view-panel="game" aria-label="Partida de palavras">
+        <section class="game-shell" aria-labelledby="game-title">
+          <div class="game-heading">
+            <div>
+              <p class="eyebrow game-date" id="game-date">CARREGANDO DESAFIO...</p>
+              <h2 id="game-title">A palavra de hoje</h2>
+            </div>
+            <label class="level-control">
+              <span>Nível</span>
+              <select id="level-select" aria-label="Nível de dificuldade">
+                <option value="leve">Leve</option>
+                <option value="regular" selected>Regular</option>
+                <option value="afiado">Afiado</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="game-meta" aria-live="polite">
+            <span><span class="meta-icon" aria-hidden="true">▦</span> <span id="word-length">5 letras</span></span>
+            <span><span class="meta-icon" aria-hidden="true">↗</span> <span id="attempt-count">7 palpites</span></span>
+            <span class="streak-pill"><span aria-hidden="true">✳</span> <span id="streak-count">— dias</span></span>
+          </div>
+
+          <div class="mode-picker" role="group" aria-label="Modo de jogo">
+            <button class="mode-button is-active" type="button" data-mode="daily" aria-pressed="true">Desafio diário</button>
+            <button class="mode-button" type="button" data-mode="practice" aria-pressed="false">Prática livre</button>
+          </div>
+
+          <div class="board-wrap" id="board-wrap">
+            <div class="board" id="board" role="table" aria-label="Tabuleiro de tentativas"></div>
+          </div>
+
+          <form class="guess-form" id="guess-form" novalidate>
+            <label for="guess-input">Seu palpite</label>
+            <div class="guess-entry">
+              <input id="guess-input" name="guess" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="5" aria-describedby="guess-help game-message" placeholder="Digite uma palavra" />
+              <button class="submit-button" type="submit"><span>Enviar</span><span class="submit-arrow" aria-hidden="true">↗</span></button>
+            </div>
+            <p class="input-help" id="guess-help">Uma palavra de 5 letras. Use o teclado ou digite acima.</p>
+          </form>
+          <p class="game-message" id="game-message" role="status" aria-live="polite">Seu desafio diário está pronto.</p>
+          <p class="sr-only" id="guess-feedback" role="status" aria-live="polite" aria-atomic="true"></p>
+
+          <div class="game-footer">
+            <button class="text-action" id="share-button" type="button" title="Copiar seu resultado">▧ <span>Compartilhar</span></button>
+            <button class="text-action" id="new-practice-button" type="button" hidden>↻ <span>Outra palavra</span></button>
+            <button class="text-action" id="back-to-today-button" type="button" hidden>← <span>Voltar a hoje</span></button>
+          </div>
+        </section>
+      </section>
+
+      <section class="archive-view" data-view-panel="archive" hidden aria-labelledby="archive-title">
+        <div class="stats-heading"><div><p class="eyebrow">DESAFIOS ANTERIORES</p><h2 id="archive-title">Arquivo</h2></div><span class="stats-period">ÚLTIMOS 30 DIAS</span></div>
+        <p class="section-intro">Escolha um dia e nível. Desafios anteriores não alteram sua sequência diária.</p>
+        <div class="archive-days" id="archive-days" aria-live="polite"></div>
+      </section>
+
+      <section class="stats-view" data-view-panel="stats" hidden aria-labelledby="stats-title">
+        <div class="stats-heading"><div><p class="eyebrow">SEU HISTÓRICO</p><h2 id="stats-title">Estatísticas</h2></div><span class="stats-period">NESTE NAVEGADOR</span></div>
+        <div class="stats-grid">
+          <article class="stat-item"><span>Partidas</span><strong id="stat-played">0</strong><small>desafios diários concluídos</small></article>
+          <article class="stat-item"><span>Vitórias</span><strong id="stat-winrate">0%</strong><small>taxa de acerto</small></article>
+          <article class="stat-item"><span>Sequência atual</span><strong id="stat-streak">0</strong><small>dias seguidos</small></article>
+          <article class="stat-item"><span>Melhor sequência</span><strong id="stat-best-streak">0</strong><small>dias consecutivos</small></article>
+          <article class="stat-item"><span>Palpite médio</span><strong id="stat-average">—</strong><small>tentativas por vitória</small></article>
+        </div>
+        <section class="distribution" aria-labelledby="distribution-title"><div class="distribution-heading"><h3 id="distribution-title">Distribuição de palpites</h3><span>vitórias por tentativa</span></div><div class="bars" id="distribution-bars"></div></section>
+        <p class="stats-footnote" id="stats-footnote">Estatísticas do desafio diário salvas neste navegador.</p>
+      </section>
+
+      <footer class="page-footer"><span>ENTRELINHAS · DESAFIO DE PALAVRAS</span><span><span id="footer-challenge">DESAFIO DIÁRIO</span> <span aria-hidden="true">/</span> SEM ANÚNCIOS</span></footer>
+    </main>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

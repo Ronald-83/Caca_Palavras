@@ -1,0 +1,15 @@
+{
+  "name": "entrelinhas",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.5"
+  },
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node --watch server.mjs",
+    "check": "node --check server.mjs && node --check client.js",
+    "test": "node --test"
+  }
+}
